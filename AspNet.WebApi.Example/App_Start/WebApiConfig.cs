@@ -4,14 +4,35 @@
 //  --------------------------------------------------------------------------------------
 
 using System.Web.Http;
+using System.Web.Http.Dispatcher;
 using System.Web.Http.Routing;
+using AspNet.WebApi.Example.WindsorIntegration;
+using Castle.Windsor;
 using Microsoft.Web.Http.Routing;
 
 namespace AspNet.WebApi.Example
 {
     public static class WebApiConfig
     {
-        public static void Register(HttpConfiguration config)
+        public static void Register(HttpConfiguration config, IWindsorContainer container)
+        {
+            MapRoutes(config);
+            RegisterControllerActivator(container);
+            ConfigureApiVersioning(config);
+            ConfigureDefaultRoute(config);
+        }
+
+        static void ConfigureApiVersioning(HttpConfiguration config)
+        {
+            config.AddApiVersioning();
+        }
+
+        static void ConfigureDefaultRoute(HttpConfiguration config)
+        {
+            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new {id = RouteParameter.Optional});
+        }
+
+        static void MapRoutes(HttpConfiguration config)
         {
             // Configure Web API routes
             // The ConstraintResolver lets us specify certain things about the route.
@@ -33,11 +54,12 @@ namespace AspNet.WebApi.Example
                     }
                 };
             config.MapHttpAttributeRoutes(constraintResolver);
+        }
 
-            // Web API configuration and services
-            config.AddApiVersioning();
-
-            config.Routes.MapHttpRoute("DefaultApi", "api/{controller}/{id}", new {id = RouteParameter.Optional});
+        static void RegisterControllerActivator(IWindsorContainer container)
+        {
+            GlobalConfiguration.Configuration.Services.Replace(typeof(IHttpControllerActivator),
+                                                               new WindsorControllerActivator(container));
         }
     }
 }
