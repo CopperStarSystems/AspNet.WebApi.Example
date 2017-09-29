@@ -98,8 +98,10 @@
     <Compile Include="Controllers\AcceptHeaderExampleController.cs" />
     <Compile Include="Controllers\GreetV3Controller.cs" />
     <Compile Include="Controllers\MissingApiVersionController.cs" />
+    <Compile Include="Controllers\Person\PersonController.cs" />
     <Compile Include="Controllers\V1\GreetController.cs" />
     <Compile Include="Controllers\V2\GreetController.cs" />
+    <Compile Include="Filters\ValidateModelAttribute.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -107,7 +109,11 @@
     <Compile Include="Models\AcceptHeaderExampleDto.cs" />
     <Compile Include="Controllers\V1\Models\GreetDto.cs" />
     <Compile Include="Models\GreetV3Dto.cs" />
+    <Compile Include="Models\Infrastructure\IEntity.cs" />
+    <Compile Include="Models\Person.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\InMemoryRepository.cs" />
+    <Compile Include="Repository\IRepository.cs" />
     <Compile Include="WindsorIntegration\WindsorControllerActivator.cs" />
     <Compile Include="WindsorIntegration\WindsorDependencyResolver.cs" />
     <Compile Include="WindsorIntegration\WindsorDependencyScope.cs" />

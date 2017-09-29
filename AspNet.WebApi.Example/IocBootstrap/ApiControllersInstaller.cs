@@ -4,6 +4,7 @@
 //  --------------------------------------------------------------------------------------
 
 using System.Web.Http;
+using AspNet.WebApi.Example.Repository;
 using Castle.MicroKernel.Registration;
 
 namespace AspNet.WebApi.Example.IocBootstrap
@@ -16,6 +17,7 @@ namespace AspNet.WebApi.Example.IocBootstrap
             container.Register(Classes.FromThisAssembly()
                                       .BasedOn<ApiController>()
                                       .LifestylePerWebRequest());
+            container.Register(Component.For<IRepository>().ImplementedBy<InMemoryRepository>().LifestylePerWebRequest());
         }
     }
 }
